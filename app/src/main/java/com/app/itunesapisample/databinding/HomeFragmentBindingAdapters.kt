@@ -1,5 +1,6 @@
 package com.app.itunesapisample.databinding
 
+import android.annotation.SuppressLint
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,18 +18,21 @@ fun setTracks(recyclerView: RecyclerView, tracks: List<Track>?){
     val layoutManager = recyclerView.layoutManager
     if (layoutManager == null){
         recyclerView.layoutManager =
-            GridLayoutManager(recyclerView.context, COLUMN_SPAN, GridLayoutManager.HORIZONTAL, false)
+            GridLayoutManager(recyclerView.context, COLUMN_SPAN, GridLayoutManager.VERTICAL, false)
     }
     if (tracks != null){
         recyclerView.adapter = TracksAdapter(recyclerView.context, tracks)
     }
 }
 
+@SuppressLint("UseCompatLoadingForDrawables")
 @BindingAdapter("imageUrl")
 fun setImage(imageView: ImageView, url: String?){
-    Glide.with(imageView.context)
+    val context = imageView.context
+
+    Glide.with(context)
         .load(url)
-        .placeholder(R.drawable.ic_baseline_error_outline_24)
+        .placeholder(context.getDrawable(R.drawable.ic_baseline_error_outline_24))
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(imageView)
 }

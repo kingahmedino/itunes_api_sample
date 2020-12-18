@@ -10,7 +10,8 @@ import retrofit2.Response
 object TracksRepository {
 
     suspend fun searchItem(item: String): List<Track>? {
-        val response = Backend.invoke().searchFor(item)
+        val url = Backend.BASE_URL + "search?term=" + item
+        val response = Backend.invoke().search(url)
         val jsonString = getJSONDataFrom(response)
         val trackResponse = parse(jsonString)
         return trackResponse?.results

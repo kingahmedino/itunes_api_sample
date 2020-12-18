@@ -5,10 +5,11 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Url
 
 interface Backend {
     companion object {
-        private const val BASE_URL = "https://itunes.apple.com/search?term="
+        const val BASE_URL = "https://itunes.apple.com/"
 
         operator fun invoke() : Backend{
             return Retrofit.Builder()
@@ -19,6 +20,6 @@ interface Backend {
         }
     }
 
-    @GET("{item}")
-    suspend fun searchFor(item: String) : Response<ResponseBody>
+    @GET
+    suspend fun search(@Url url: String) : Response<ResponseBody>
 }
