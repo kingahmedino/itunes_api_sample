@@ -19,7 +19,7 @@ class HomeViewModel: ViewModel() {
         viewModelJob.cancel()
     }
 
-    private fun getTracks(query: String) {
+    fun getTracks(query: String) {
         uiScope.launch {
             tracks.postValue(TracksRepository.searchItem(query))
         }
