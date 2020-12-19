@@ -32,7 +32,8 @@ fun setImage(imageView: ImageView, url: String?){
 
     Glide.with(context)
         .load(url)
-        .placeholder(context.getDrawable(R.drawable.ic_baseline_error_outline_24))
+        .placeholder(context.getDrawable(R.drawable.loading_animation))
+        .error(context.getDrawable(R.drawable.ic_broken_image))
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(imageView)
 }
