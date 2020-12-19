@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="java.util.List"/>
-        <import type="com.app.itunesapisample.models.Track"/>
+
+        <import type="java.util.List" />
+
+        <import type="com.app.itunesapisample.models.Track" />
+
         <variable
             name="tracks"
             type="List&lt;Track>" />
@@ -17,29 +20,26 @@
         android:layout_height="match_parent"
         tools:context=".ui.HomeFragment">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/search_view_bgrnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </com.google.android.material.appbar.AppBarLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_recycler_view"
+            tracksList="@{tracks}"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tracksList="@{tracks}"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
+            app:layout_constraintTop_toBottomOf="@+id/search_view" />
 
         <TextView
             android:id="@+id/error_text"
