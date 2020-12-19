@@ -2,6 +2,7 @@ package com.app.itunesapisample.ui
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -29,6 +30,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mHomeViewModel.tracks.observe(viewLifecycleOwner, Observer {tracks ->
             mBinding.tracks = tracks
+        })
+
+        mBinding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                mBinding.searchView.clearFocus()
+                if (query != null) {
+                    mHomeViewModel.getTracks(query)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
         })
     }
 
