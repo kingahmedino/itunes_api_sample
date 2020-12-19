@@ -2,6 +2,7 @@ package com.app.itunesapisample.ui
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,11 +29,30 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mHomeViewModel.tracks.observe(viewLifecycleOwner, Observer {tracks ->
+        mHomeViewModel.tracks.observe(viewLifecycleOwner, Observer { tracks ->
             mBinding.tracks = tracks
         })
 
-        mBinding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        mHomeViewModel.status.observe(viewLifecycleOwner, Observer { status ->
+            when (status) {
+                ApiStatus.LOADING -> {
+                    mBinding.apiStatus = "Loading"
+                }
+                ApiStatus.DONE -> {
+                    mBinding.apiStatus = "Done"
+                }
+                ApiStatus.ERROR -> {
+                    mBinding.apiStatus = "Error"
+                    Toast.makeText(
+                        requireContext(),
+                        "Check your internet connection",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
+
+        mBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 mBinding.searchView.clearFocus()
                 if (query != null) {

@@ -11,13 +11,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class HomeViewModel: ViewModel() {
+enum class ApiStatus { LOADING, ERROR, DONE }
+
+class HomeViewModel : ViewModel() {
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     private val _tracks = MutableLiveData<List<Track>>()
+    private val _status = MutableLiveData<ApiStatus>()
 
     val tracks: LiveData<List<Track>>
         get() = _tracks
+    val status: LiveData<ApiStatus>
+        get() = _status
 
     override fun onCleared() {
         super.onCleared()
@@ -25,10 +30,13 @@ class HomeViewModel: ViewModel() {
     }
 
     fun getTracks(query: String) {
-        uiScope.launch {
+        val job = uiScope.launch {
             try {
+                _status.postValue(ApiStatus.LOADING)
                 _tracks.postValue(TracksRepository.searchItem(query))
-            } catch (t: Throwable){
+                _status.postValue(ApiStatus.DONE)
+            } catch (t: Throwable) {
+                _status.postValue(ApiStatus.ERROR)
                 Log.d("HomeViewModel", "getTracks: ${t.message}")
             }
         }
