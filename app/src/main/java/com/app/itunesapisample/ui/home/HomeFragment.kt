@@ -1,4 +1,4 @@
-package com.app.itunesapisample.ui
+package com.app.itunesapisample.ui.home
 
 import android.os.Bundle
 import android.view.*
@@ -15,8 +15,10 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mHomeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        mHomeViewModel.getTracks("Thriller")
+        val application = requireNotNull(this.activity).application
+        val viewModelFactory = HomeViewModelFactory(application)
+        mHomeViewModel =
+            ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
     }
 
     override fun onCreateView(

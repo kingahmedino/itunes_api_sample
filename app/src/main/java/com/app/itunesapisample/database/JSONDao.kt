@@ -11,7 +11,7 @@ interface JSONDao {
     fun insert(json: JSONData)
 
     @Query("SELECT * FROM json_table WHERE search_item = :query")
-    fun getSearchQueryFromDB(query: String) : JSONData
+    fun getSearchQueryFromDB(query: String) : JSONData?
 
     @Query("SELECT * FROM json_table ORDER BY id DESC LIMIT 1")
     fun getLastSearchQuery(): JSONData?
